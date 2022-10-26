@@ -15,9 +15,10 @@ public class Menu {
         case 1:
         
         System.out.println("Podaj login: ");
-        String login = sc.next();        
+        String login = sc.next();             
         System.out.println("Podaj hasło: "+sc.nextLine());
         String password = sc.next();
+        
         break;
         case 2:
         System.out.println("Przejdzie do opcji wyszukiwania");
@@ -25,5 +26,6 @@ public class Menu {
         case 9:
         System.out.println("Ciao bella!");
         sc.close();
+        System.exit(0);
     }
 }}
