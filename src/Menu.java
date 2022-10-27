@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
-public class Menu {
-    public void display (){
-
+public class Menu extends User {
+    public void displayMainMenu (){
+    User user = new User();
+    
     System.out.println("Witaj w naszym sklepie!");
     System.out.println("----------------------");
     System.out.println("1. Zaloguj się!");
@@ -16,12 +17,25 @@ public class Menu {
         
         System.out.println("Podaj login: ");
         String login = sc.next();             
-        System.out.println("Podaj hasło: "+sc.nextLine());
+        System.out.println("Podaj hasło: ");
         String password = sc.next();
         
         break;
         case 2:
-        System.out.println("Przejdzie do opcji wyszukiwania");
+        System.out.println("1. Wyszukaj gre");
+        System.out.println("2. Wyszukaj kategorie");
+        int x = sc.nextInt();
+        switch(x){            
+            case 1:        
+            user.searchByGame();
+            sc.close();
+            break;
+            case 2:
+            user.searchByCategory();
+            sc.close();
+            break;
+
+        }
         break;
         case 9:
         System.out.println("Ciao bella!");
