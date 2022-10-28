@@ -14,11 +14,8 @@ public class Menu extends User {
     System.out.println("Wybrana liczba to:"+menu_nr);
     switch(menu_nr){
         case 1:
-        
-        System.out.println("Podaj login: ");
-        String login = sc.next();             
-        System.out.println("Podaj hasło: ");
-        String password = sc.next();
+        Admin admin = new Admin();
+        admin.loginVerficiation();
         
         break;
         case 2:

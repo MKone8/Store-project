@@ -18,6 +18,7 @@ public class User{
             System.out.print("Podaj nazwę gry:");           
             String game = scanner.next();
             resultSet = statement.executeQuery("SELECT * FROM gamesstore_games WHERE game_title LIKE '%"+game+"%'");
+            
             int code;
             String title, categoryCatalog;
             while (resultSet.next()) {
