@@ -5,8 +5,11 @@ public class App {
         System.out.println("Hello, World!");
 
         // Menu show = new Menu();
-        // show.displayMainMenu();
+        // show.mainMenu();
+        // Admin admin = new Admin();
+        // admin.addProduct();
+
         Admin admin = new Admin();
-        admin.add3();
+        admin.loginVerficiation();
     }
 }
