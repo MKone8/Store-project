@@ -1,18 +1,20 @@
-## Getting Started
+# LearnJavaDatabase
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+**Sklep z grami**
 
-## Folder Structure
+Podział panelu na użytkownika i admina. Użytkownik ma mieć dostęp do wszytskich dostępnych gier razem z cenami(przyjmij, że w bazie nie będzie więcej niż 65 000 produktów), 
+może również wyświetlić listę na podstawie kategorii. Admin musi dodatkowo mieć opcję dodawania nowych gier, updatowania cen, usuwania/ukrywania gier z bazy danych, 
+wyświetlanie wszystkich gier alfabetycznie. Dodaj również pracowników odpowiedzialnych za konkretne kategorie gier.
 
-The workspace contains two folders by default, where:
+:heavy_check_mark: Zadania:
+- stwórz DB
+- dodaj klasy odpowiadające obiektom w DB
+- dodaj klasy DAO do obsługi DB 
+- zaprojektuj panel sterowania
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+:open_book: Umiejętności: 
+- Scanner
+- Arrays
+- PreparedStatement
+- SQL
+- BCrypt
