@@ -30,6 +30,8 @@ replay_pid*
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
+!.vscode/package.json
+!.vscode/package-lock.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
