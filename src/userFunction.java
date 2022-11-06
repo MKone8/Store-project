@@ -3,7 +3,7 @@ import java.sql.*;
 
 
 
-public class User {
+public class userFunction {
 
     protected Double gamePrice;
     private String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";

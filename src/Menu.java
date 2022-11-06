@@ -6,7 +6,7 @@ public class Menu {
     public static void main (String []args){
 
         
-        User user = new User();
+        userFunction user = new userFunction();
         
 
         Scanner scan = new Scanner(System.in);
@@ -60,7 +60,9 @@ public class Menu {
                                 System.out.println("Żegnam.");
                                 System.exit(0);
                             } // zamyka program i tak
-                        }else System.out.println("Produkt nie został dodany");    
+                        }else System.out.println("Produkt nie został dodany");  
+                                 
+                     
                     }
                     break;
                     case 2:
