@@ -1,8 +1,11 @@
 import java.util.Scanner;
+import dao.*;
+
 
 public class MenuController {
-
-    userFunction user = new userFunction();
+    
+    UserDAO userDAO = new UserDAO();
+    ProductDAO productDAO = new ProductDAO();
     Scanner scan = new Scanner(System.in);
 
     public void mainMenu() {
@@ -32,7 +35,7 @@ public class MenuController {
         String email = scan.nextLine();
         System.out.println("Podaj hasło: ");
         String password = scan.nextLine();
-        if (!user.loginVer(email, password)) {
+        if (!userDAO.loginVer(email, password)) {
             System.out.println("Witamy na pokładzie");
             return true;
         } else {
@@ -102,18 +105,17 @@ public class MenuController {
         System.out.print("Y/n: ");
         String choice = scan.nextLine().toUpperCase();
         if (choice.equals("Y")) {
-            user.addProduct(title, category, newPrice);
-            System.out.println(user.showInfo(title));
+            productDAO.addProduct(title, category, newPrice);
+            System.out.println(productDAO.showInfo(title));
             System.out.println("Czy chcesz dodać kolejny produkt?");
             System.out.print("Y/n");
             String Yn = scan.nextLine().toUpperCase();
             if (Yn.equals("Y")) {
                 menuAddProduct();
-                // System.out.println("Tu załaduje się case 1:"); // to czeka na opakowanie
+                
             } else {
-                showMenuAdmin(); // test czy działa
-                // System.exit(0);
-            } // zamyka program i tak
+                showMenuAdmin();              
+            }
         } else {
             System.out.println("[Produkt nie został dodany]");
             showMenuAdmin();
@@ -130,18 +132,18 @@ public class MenuController {
             case 1: {
                 System.out.println("Podaj tytuł gry");
                 String title = scan.nextLine();
-                System.out.println("Aktualizujemy cenę dla: " + user.showInfo(title)); // <-- działa
+                System.out.println("Aktualizujemy cenę dla: " + productDAO.showInfo(title)); 
                 System.out.println("Podaj nową cene: ");
                 double newPrice = scan.nextDouble();
                 scan.nextLine();
 
-                System.out.println("Stara cena to: " + user.gamePrice + ", nowa cena to: " + newPrice
+                System.out.println("Stara cena to: " + productDAO.gamePrice + ", nowa cena to: " + newPrice
                         + ", czy chcesz zaakceptować nową cene?");
                 System.out.print("Y/n: ");
                 String choice = scan.nextLine().toUpperCase();
                 if (choice.equals("Y")) {
-                    user.updatePrice(title, newPrice);
-                    System.out.println(user.showInfo(title));
+                    productDAO.updatePrice(title, newPrice);
+                    System.out.println(productDAO.showInfo(title));
                     System.out.println("Cena została zaktualizowana");
                     System.out.println("Czy chcesz zaktualizować kolejną cene?");
                     System.out.print("Y/n: ");
@@ -160,18 +162,18 @@ public class MenuController {
                 System.out.println("Podaj ID gry");
                 int id = scan.nextInt();
                 scan.nextLine();
-                System.out.println("Aktualizujemy cenę dla: " + user.showInfo(id)); // tutaj zapytanie Portal /
-                                                                                    // Kategoria / Cena
+                System.out.println("Aktualizujemy cenę dla: " + productDAO.showInfo(id)); 
+                                                                                    
                 System.out.println("Podaj nową cene: ");
                 double newPrice = scan.nextDouble();
-                System.out.println("Stara cena to" + user.gamePrice + ", nowa cena to: " + newPrice
+                System.out.println("Stara cena to: " + productDAO.gamePrice + ", nowa cena to: " + newPrice
                         + ", czy chcesz zaakceptować nową cene?");
                 System.out.print("Y/n: ");
                 scan.nextLine();
                 String choice = scan.nextLine().toUpperCase();
                 if (choice.equals("Y")) {
-                    user.updatePrice(id, newPrice);
-                    System.out.println(user.showInfo(id));
+                    productDAO.updatePrice(id, newPrice);
+                    System.out.println(productDAO.showInfo(id));
                     System.out.println("Cena została zaktualizowana");
                     System.out.println("Czy chcesz zaktualizować kolejną cene?");
                     System.out.print("Y/n: ");
@@ -223,11 +225,11 @@ public class MenuController {
             case 1: {
                 System.out.println("Podaj tytuł gry");
                 String title = scan.nextLine();
-                System.out.println("Chcesz usunąć: " + user.showInfo(title));
+                System.out.println("Chcesz usunąć: " + productDAO.showInfo(title));
                 System.out.print("Y/n: ");
                 String choice = scan.nextLine().toUpperCase();
                 if (choice.equals("Y")) {
-                    user.removeProduct(title);
+                    productDAO.removeProduct(title);
                     // user.showInfo(title);
                     System.out.println("Produkt został usunięty");
                     System.out.println("Czy chcesz usunąć kolejny produkt?");
@@ -247,12 +249,12 @@ public class MenuController {
                 System.out.println("Podaj ID produktu ");
                 int id = scan.nextInt();
                 scan.nextLine();
-                System.out.println("Chcesz usunąć: " + user.showInfo(id));
+                System.out.println("Chcesz usunąć: " + productDAO.showInfo(id));
                 System.out.print("Y/n: ");
                 String choice = scan.nextLine().toUpperCase();
                 if (choice.equals("Y")) {
-                    user.removeProduct(id);
-                    user.showInfo(id);
+                    productDAO.removeProduct(id);
+                    productDAO.showInfo(id);
                     System.out.println("Produkt został usunięty");
                     System.out.println("Czy chcesz usunąć kolejny produkt?");
                     System.out.print("Y/n: ");
@@ -272,7 +274,7 @@ public class MenuController {
 
     public void menuSortAplh() {
         System.out.println("Posortowane produkty:");
-        user.sortAlph();
+        productDAO.sortAlph();
         System.out.println("");
         showMenuAdmin();
     }
@@ -281,7 +283,7 @@ public class MenuController {
         System.out.println("Podaj tytuł:");
         String title = scan.nextLine();
         System.out.println("Wyszukałeś produkt: " + title);
-        user.searchForGame(title);
+        productDAO.searchForGame(title);
         System.out.println("1. Dodaj do koszyka"); // brak funkcjonalności
         System.out.println("2. Cofnij"); // brak funkcjonalności
 
@@ -291,7 +293,7 @@ public class MenuController {
         System.out.println("Podaj kategorię:");
         String category = scan.nextLine();
         System.out.println("Wyszukałeś kategorię: " + category);
-        user.searchForCategory(category);
+        productDAO.searchForCategory(category);
         System.out.println("1. Dodaj do koszyka"); // brak funkcjonalności
         System.out.println("2. Cofnij"); // brak funkcjonalnosci
     }
