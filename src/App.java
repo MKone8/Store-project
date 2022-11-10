@@ -1,4 +1,4 @@
-
+import dao.*;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -6,6 +6,8 @@ public class App {
 
         MenuController menuCon = new MenuController();
         menuCon.mainMenu();
-        
+
+        // UserDAO userDAO = new UserDAO();
+        // userDAO.create("jan@dupa.pl","haslocienzkie");
     }
 }

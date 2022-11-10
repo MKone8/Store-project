@@ -16,11 +16,15 @@ public class ProductDAO {
     public void addProduct(String title, String category, Double price){
         Connection conn = null;
         try {      
-            conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD);
-            Statement statement = conn.createStatement();        
-        statement.executeUpdate("INSERT INTO gamesStore_games (game_title, game_category, game_price) VALUES('"+title+"', '"+category+"', '"+price+"')");
+        conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD);
+        String query = "INSERT INTO gamesStore_games (game_title, game_category, game_price)"+ " VALUES (?,?,?)";
+        PreparedStatement preparedStmt = conn.prepareStatement(query);
 
-        statement.close();
+        preparedStmt.setString(1, title);
+        preparedStmt.setString(2, category);
+        preparedStmt.setDouble(3, price);
+        
+        preparedStmt.execute();
         conn.close();       
     }
     catch(Exception e){

@@ -11,18 +11,20 @@ public class MenuController {
     public void mainMenu() {
         System.out.println("1. Zaloguj się");
         System.out.println("2. Kontynuuj jako gość");
+        System.out.println("3. Zarejestruj się");
         System.out.println("9. Wyjdź");
         int mainMenu_nr = scan.nextInt();
         scan.nextLine();
 
         switch (mainMenu_nr) {
             case 1:
-                if (logIn()) {
-                    showMenuAdmin();
-                }
+                if (logIn())  showMenuAdmin();             
                 break;
             case 2:
                 showGuestMenu();
+                break;
+            case 3:
+                signIn();
                 break;
             case 9:
                 closeProgram();
@@ -30,7 +32,7 @@ public class MenuController {
         }
     }
 
-    boolean logIn() {
+    public boolean logIn() {
         System.out.println("Podaj email: ");
         String email = scan.nextLine();
         System.out.println("Podaj hasło: ");
@@ -43,6 +45,18 @@ public class MenuController {
             return false;
         }
     }
+
+    public void signIn(){
+        System.out.println("---REJESTRACJA---");
+        System.out.println("Podaj email: ");
+        String email = scan.nextLine();
+        System.out.println("Podaj hasło: ");
+        String password = scan.nextLine();
+        if (!userDAO.loginVer(email,password)){
+            userDAO.create(email,password);
+        }else System.out.println("Użytkownik bla bla");
+    }
+
 
     public void showMenuAdmin() {
         System.out.println("1. Dodaj nową gre");
@@ -301,5 +315,6 @@ public class MenuController {
     public void closeProgram() {
         System.exit(0);
     }
+ 
 
 }
