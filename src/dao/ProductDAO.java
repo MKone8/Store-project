@@ -14,18 +14,18 @@ public class ProductDAO {
     private String MYSQL_PASSWORD = "xvpVPoWbop8Mf3y";
 
     public void addProduct(String title, String category, Double price){
-        Connection conn = null;
-        try {      
-        conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD);
-        String query = "INSERT INTO gamesStore_games (game_title, game_category, game_price)"+ " VALUES (?,?,?)";
-        PreparedStatement preparedStmt = conn.prepareStatement(query);
+        
+        try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+           
+        String QUERY_ADD = "INSERT INTO gamesStore_games (game_title, game_category, game_price)"+ " VALUES (?,?,?)";
+        PreparedStatement preparedStmt = conn.prepareStatement(QUERY_ADD);
 
         preparedStmt.setString(1, title);
         preparedStmt.setString(2, category);
         preparedStmt.setDouble(3, price);
         
         preparedStmt.execute();
-        conn.close();       
+             
     }
     catch(Exception e){
         System.out.println(e);
@@ -33,14 +33,11 @@ public class ProductDAO {
 
     public void removeProduct(String title){
 
-        Connection conn = null;
-        try {          
-            conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD);           
-            Statement statement = conn.createStatement();
-
-            statement.executeUpdate("DELETE FROM gamesStore_games WHERE game_title = '"+title+"'");          
-            statement.close();
-            conn.close();            
+        try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){         
+            String QUERY_REMOVE_BY_TITLE = "DELETE FROM gamesStore_games WHERE game_title = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(QUERY_REMOVE_BY_TITLE);
+            preparedStatement.setString(1,title);
+            preparedStatement.execute();                      
         }
         catch(Exception e){
             System.out.println(e);
@@ -49,16 +46,11 @@ public class ProductDAO {
 
         public void removeProduct(int id){
     
-            Connection conn = null;
-            try {
-                
-                conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD);  
-                
-                Statement statement = conn.createStatement();             
-                statement.executeUpdate("DELETE FROM gamesStore_games WHERE game_id = '"+id+"'");
-                    
-                statement.close();
-                conn.close();               
+            try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){ 
+                String QUERY_REMOVE_BY_ID = "DELETE FROM gamesStore_games WHERE game_id = ?";
+                PreparedStatement preparedStatement = conn.prepareStatement(QUERY_REMOVE_BY_ID);
+                preparedStatement.setInt(1,id);
+                preparedStatement.execute();                            
             }
             catch(Exception e){
                 System.out.println(e);
@@ -66,12 +58,13 @@ public class ProductDAO {
 }
             public String showInfo(String game){
 
-                Connection conn = null;
-                try{
-                conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD); 
-                Statement statement = conn.createStatement();
-                ResultSet resultSet = statement.executeQuery("Select * FROM gamesStore_games WHERE game_title = '"+game+"'");
+                try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+                String QUERY_SHOWINFO_BY_TITLE = "Select * FROM gamesStore_games WHERE game_title = ?";
 
+                PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SHOWINFO_BY_TITLE);
+                preparedStatement.setString(1,game);
+                             
+                ResultSet resultSet = preparedStatement.executeQuery();
                 if(resultSet.next()){
                     int gameId = resultSet.getInt("game_id");
                     String gameTitle = resultSet.getString("game_title");                    
@@ -88,11 +81,11 @@ public class ProductDAO {
             }
             public String showInfo(int id){
 
-                Connection conn = null;
-                try{
-                conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD); 
-                Statement statement = conn.createStatement();
-                ResultSet resultSet = statement.executeQuery("Select * FROM gamesStore_games WHERE game_id = '"+id+"'");
+                try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+                String QUERY_SHOWINFO_BY_ID = "Select * FROM gamesStore_games WHERE game_id = ?";
+                PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SHOWINFO_BY_ID);
+                preparedStatement.setInt(1,id);
+                ResultSet resultSet = preparedStatement.executeQuery();
 
                 if(resultSet.next()){
                     int gameId = resultSet.getInt("game_id");
@@ -110,9 +103,7 @@ public class ProductDAO {
             }
 
             public void sortAlph(){
-                Connection conn = null;
-                try{
-                    conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD);
+                try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
                     Statement statement = conn.createStatement();
                     ResultSet resultSet = statement.executeQuery("SELECT game_title, game_price FROM gamesStore_games ORDER BY game_title ASC LIMIT 10");
 
@@ -124,36 +115,34 @@ public class ProductDAO {
                     }
                     resultSet.close();
                     statement.close();
-                    conn.close();
+                    
                 }catch(Exception e){
                     System.out.println(e);
                 }
             }
 
             public void updatePrice(int id, double price){
-                Connection conn = null;
-                try{
-                    conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD);
-                    Statement statement = conn.createStatement();
-                    statement.executeUpdate("UPDATE gamesStore_games SET game_price ='"+price+"' WHERE game_id ='"+id+"'");
-                  
-                    statement.close();
-                    conn.close();
-
+                try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+                    String QUERY_UPDATE_PRICE_BY_ID = "UPDATE gamesStore_games SET game_price = ? WHERE game_id = ?";
+                    PreparedStatement preparedStatement = conn.prepareStatement(QUERY_UPDATE_PRICE_BY_ID);
+                    preparedStatement.setDouble(1,price);
+                    preparedStatement.setInt(2,id);
+                    
+                    preparedStatement.execute();
+                    
                 }catch (Exception e){
                     System.out.println(e);
                 }
 
             }
             public void updatePrice(String title, double price){
-                Connection conn = null;
-                try{
-                    conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD);
-                    Statement statement = conn.createStatement();
-                    statement.executeUpdate("UPDATE gamesStore_games SET game_price ='"+price+"' WHERE game_title ='"+title+"'");
-                  
-                    statement.close();
-                    conn.close();
+                try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+                    String QUERY_UPDATE_PRICE_BY_TITLE = "Update gamesStore_games SET game_price = ? WHERE game_title = ?";
+                    PreparedStatement preparedStatement = conn.prepareStatement(QUERY_UPDATE_PRICE_BY_TITLE);
+                    preparedStatement.setDouble(1,price);
+                    preparedStatement.setString(2,title);
+                    
+                    preparedStatement.execute();
 
                 }catch (Exception e){
                     System.out.println(e);
@@ -161,41 +150,38 @@ public class ProductDAO {
 
             }
             public void searchForGame(String game){
-                Connection conn = null;
-                try{
-                    conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD);
-                    Statement statement = conn.createStatement();
-                    ResultSet resultSet = statement.executeQuery("Select * From GamesStore_games WHERE game_title LIKE '%"+game+"%' LIMIT 10");
+                try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+                    String QUERY_SEARCH_FOR_GAME = "Select * FROM GamesStore_games WHERE game_title LIKE ? LIMIT 10";
+                    PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SEARCH_FOR_GAME);
+                    preparedStatement.setString(1,"%"+game+"%");
                     
+                    ResultSet resultSet = preparedStatement.executeQuery();
+
                     while(resultSet.next()){
                         String title = resultSet.getString("game_title"); 
                         String category = resultSet.getString("game_category"); 
                         String price = resultSet.getString("game_price"); 
                         System.out.println("Tytuł: "+title+", Kategoria: " +category+" Cena: "+price);
                     }
-                    statement.close();
-                    conn.close();
+                    
 
                 }catch (Exception e){
                     System.out.println(e);
                 }}
 
                 public void searchForCategory(String cat){
-                    Connection conn = null;
-                    try{
-                        conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD);
-                        Statement statement = conn.createStatement();
-                        ResultSet resultSet = statement.executeQuery("Select * From GamesStore_games WHERE game_category LIKE'%"+cat+"%' LIMIT 10");
+                    try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+                        String QUERY_SEARCH_FOR_CATEGORY = " Select * From GamesStore_games WHERE game_category LIKE ? LIMIT 10";
+                        PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SEARCH_FOR_CATEGORY);
+                        preparedStatement.setString(1,cat);
+                        ResultSet resultSet = preparedStatement.executeQuery();
                         
                         while(resultSet.next()){
                             String title = resultSet.getString("game_title"); 
                             String category = resultSet.getString("game_category"); 
                             String price = resultSet.getString("game_price"); 
                             System.out.println("Tytuł: "+title+", Kategoria: " +category+" Cena: "+price);
-                        }
-                        statement.close();
-                        conn.close();
-    
+                        }                       
                     }catch (Exception e){
                         System.out.println(e);
                     }

@@ -37,11 +37,9 @@ public class MenuController {
         String email = scan.nextLine();
         System.out.println("Podaj hasło: ");
         String password = scan.nextLine();
-        if (!userDAO.loginVer(email, password)) {
-            System.out.println("Witamy na pokładzie");
+        if (userDAO.loginVer(email, password))            
             return true;
-        } else {
-            System.out.println("Hasło jest nieprawidłowe");
+         else {           
             return false;
         }
     }
@@ -52,9 +50,10 @@ public class MenuController {
         String email = scan.nextLine();
         System.out.println("Podaj hasło: ");
         String password = scan.nextLine();
-        if (!userDAO.loginVer(email,password)){
-            userDAO.create(email,password);
-        }else System.out.println("Użytkownik bla bla");
+        if(userDAO.create(email,password)){  
+            System.out.println("Konto założone poprawnie, witamy!");       
+            showGuestMenu();
+        }else System.out.println("Nie udało założyć konta!");    
     }
 
 
@@ -122,7 +121,7 @@ public class MenuController {
             productDAO.addProduct(title, category, newPrice);
             System.out.println(productDAO.showInfo(title));
             System.out.println("Czy chcesz dodać kolejny produkt?");
-            System.out.print("Y/n");
+            System.out.print("Y/n: ");
             String Yn = scan.nextLine().toUpperCase();
             if (Yn.equals("Y")) {
                 menuAddProduct();
@@ -300,6 +299,7 @@ public class MenuController {
         productDAO.searchForGame(title);
         System.out.println("1. Dodaj do koszyka"); // brak funkcjonalności
         System.out.println("2. Cofnij"); // brak funkcjonalności
+        scan.nextLine();
 
     }
 
@@ -310,6 +310,7 @@ public class MenuController {
         productDAO.searchForCategory(category);
         System.out.println("1. Dodaj do koszyka"); // brak funkcjonalności
         System.out.println("2. Cofnij"); // brak funkcjonalnosci
+        scan.nextLine();
     }
 
     public void closeProgram() {
