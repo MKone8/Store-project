@@ -150,7 +150,7 @@ public class MenuController {
                 double newPrice = scan.nextDouble();
                 scan.nextLine();
 
-                System.out.println("Stara cena to: " + productDAO.gamePrice + ", nowa cena to: " + newPrice
+                System.out.println("Stara cena to: " + productDAO.price + ", nowa cena to: " + newPrice
                         + ", czy chcesz zaakceptować nową cene?");
                 System.out.print("Y/n: ");
                 String choice = scan.nextLine().toUpperCase();
@@ -175,11 +175,10 @@ public class MenuController {
                 System.out.println("Podaj ID gry");
                 int id = scan.nextInt();
                 scan.nextLine();
-                System.out.println("Aktualizujemy cenę dla: " + productDAO.showInfo(id)); 
-                                                                                    
+                System.out.println("Aktualizujemy cenę dla: " + productDAO.showInfo(id));                                                                                   
                 System.out.println("Podaj nową cene: ");
                 double newPrice = scan.nextDouble();
-                System.out.println("Stara cena to: " + productDAO.gamePrice + ", nowa cena to: " + newPrice
+                System.out.println("Stara cena to: " + productDAO.price + ", nowa cena to: " + newPrice
                         + ", czy chcesz zaakceptować nową cene?");
                 System.out.print("Y/n: ");
                 scan.nextLine();

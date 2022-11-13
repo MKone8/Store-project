@@ -12,8 +12,8 @@ public class UserDAO {
     private String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";
     private String MYSQL_USER = "root";
     private String MYSQL_PASSWORD = "xvpVPoWbop8Mf3y";
-    private static final String CREATE_USER_QUERY = "INSERT INTO User (user_email, user_password)"+" VALUES (?,?)";
-    private static final String LOGIN_USER_QUERY = "SELECT user_password FROM user WHERE user_email = ?";
+    private static final String CREATE_USER_QUERY = "INSERT INTO User (email, password)"+" VALUES (?,?)";
+    private static final String LOGIN_USER_QUERY = "SELECT password FROM user WHERE email = ?";
     Scanner scan = new Scanner(System.in);
     
     public boolean create(String email, String password){
