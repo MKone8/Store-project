@@ -9,43 +9,56 @@ import model.User;
 
 public class UserDAO {
     
-    private String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";
-    private String MYSQL_USER = "root";
-    private String MYSQL_PASSWORD = "xvpVPoWbop8Mf3y";
+    private static String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";
+    private static String MYSQL_USER = "root";
+    private static String MYSQL_PASSWORD = "xvpVPoWbop8Mf3y";
     private static final String CREATE_USER_QUERY = "INSERT INTO User (email, password)"+" VALUES (?,?)";
     private static final String LOGIN_USER_QUERY = "SELECT password FROM user WHERE email = ?";
+    // private static final String USER_EXISTENCE_CHECK = "SELECT email FROM USER WHERE email = ?";
     Scanner scan = new Scanner(System.in);
     
-    public boolean create(String email, String password){
-        
-        try           
-            (Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+    public void create(String email, String password){
+                        
+        try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
    
-            String pw_hash = BCrypt.hashpw(password, BCrypt.gensalt());
+            String pw_hash = BCrypt.hashpw(password, BCrypt.gensalt(12));
             PreparedStatement preparedStmt = conn.prepareStatement(CREATE_USER_QUERY);
             preparedStmt.setString(1,email);
             preparedStmt.setString(2,pw_hash);
-            preparedStmt.execute();
-            conn.close();    
-            return true;
-            }
-            catch (SQLIntegrityConstraintViolationException e){
-            System.out.println("Użytkownik istnieje");
-            return false;
-            }
+            preparedStmt.execute();              
+       }
+
             catch (SQLException e){
             System.out.println(e);
-            return false;
+            
         } 
-        
 
-       
     }
+        
+    public boolean isCreated(String email){
+        try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+            PreparedStatement preparedStmt = conn.prepareStatement(LOGIN_USER_QUERY);
+            preparedStmt.setString(1,email);
+            ResultSet resultSet = preparedStmt.executeQuery();
+        
+            if(resultSet.next()){
+                return true;
+                }else return false;
+            }
+            catch (SQLIntegrityConstraintViolationException e){
+                System.out.println("Uzytkownik istnieje.");
+            }catch (SQLException e){
+                System.out.println(e);
+            }return false;
+        } 
+            
+             
+    
+       
 
     public boolean loginVer(String email, String password){
-
-        try
-            (Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){         
+     
+        try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){         
             PreparedStatement preparedStatement = conn.prepareStatement(LOGIN_USER_QUERY);
             preparedStatement.setString(1,email);
             ResultSet hashedPassword = preparedStatement.executeQuery();
@@ -55,7 +68,7 @@ public class UserDAO {
                 if(BCrypt.checkpw(password,check_pw)){                
                         System.out.println("Witamy z powrotem!");
                         return true;
-                    } else System.out.println("Hasło jest nieprawidłowe!");          
+                    }else System.out.println("Hasło jest nieprawidłowe!");          
                     
                 } else System.out.println("Uzytkownik nie istnieje w bazie danych");               
                  } catch (Exception e){

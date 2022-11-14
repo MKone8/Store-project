@@ -9,16 +9,16 @@ public class ProductDAO {
 
 
     public Double price;
-    private String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";
-    private String MYSQL_USER = "root";
-    private String MYSQL_PASSWORD = "xvpVPoWbop8Mf3y";
-    private String MYSQL_TABLE = "games"; //games, books, films
+    private static String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";
+    private static String MYSQL_USER = "root";
+    private static String MYSQL_PASSWORD = "xvpVPoWbop8Mf3y";
+    private String MYSQL_TABLE = "games"; //games, books, films // Tworze obiekt GamesDAO i w konstruktorze ustawiam wartość (możliwe, ze trzeba będize użyć settera)
 
     public void addProduct(String title, String category, Double price){
         
         try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
            
-        String QUERY_ADD = "INSERT INTO "+MYSQL_TABLE+" (title, category, price)"+ " VALUES (?,?,?)";
+        String QUERY_ADD = "INSERT INTO "+MYSQL_TABLE+" (title, category, price) VALUES (?,?,?)";
         PreparedStatement preparedStmt = conn.prepareStatement(QUERY_ADD);
 
         preparedStmt.setString(1, title);

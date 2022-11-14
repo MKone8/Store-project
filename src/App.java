@@ -7,7 +7,5 @@ public class App {
         MenuController menuCon = new MenuController();
         menuCon.mainMenu();
 
-        // UserDAO userDAO = new UserDAO();
-        // userDAO.create("jan@dupa.pl","haslocienzkie");
     }
 }

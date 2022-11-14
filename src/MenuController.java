@@ -37,7 +37,7 @@ public class MenuController {
         String email = scan.nextLine();
         System.out.println("Podaj hasło: ");
         String password = scan.nextLine();
-        if (userDAO.loginVer(email, password))            
+        if (!userDAO.loginVer(email, password))            
             return true;
          else {           
             return false;
@@ -50,10 +50,11 @@ public class MenuController {
         String email = scan.nextLine();
         System.out.println("Podaj hasło: ");
         String password = scan.nextLine();
-        if(userDAO.create(email,password)){  
+        if(!userDAO.isCreated(email)){  
+            userDAO.create(email,password);
             System.out.println("Konto założone poprawnie, witamy!");       
             showGuestMenu();
-        }else System.out.println("Nie udało założyć konta!");    
+        }else System.out.println("Użytkownik istnieje.");    
     }
 
 
