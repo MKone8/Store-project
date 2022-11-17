@@ -6,6 +6,16 @@ public abstract class Product {
     private String category;
     private Double price;
 
+    public Product (String title, String category){
+        this.title = title;
+        this.category = category;
+    }
+    public Product (String title, String category, double price){
+        this.title = title;
+        this.category = category;
+        this.price = price;
+    }    
+
     public int getId() {
         return id;
     }
