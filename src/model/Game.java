@@ -2,12 +2,12 @@ package model;
 
 public class Game extends Product {
 
-    public Game(String title, String category) {
-        super(title, category);
+    public Game(int id, String title, String category) {
+        super(id, title, category);
         //TODO Auto-generated constructor stub
     }
-    public Game(String title, String category, double price){
-        super(title,category,price);
+    public Game(int id, String title, String category, double price){
+        super(id, title,category,price);
         //NOT GENERATED AUTOMATICALLY
     }
 

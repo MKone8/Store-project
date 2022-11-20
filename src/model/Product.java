@@ -6,11 +6,13 @@ public abstract class Product {
     private String category;
     private Double price;
 
-    public Product (String title, String category){
+    public Product (int id, String title, String category){
+        this.id = id;
         this.title = title;
         this.category = category;
     }
-    public Product (String title, String category, double price){
+    public Product (int id, String title, String category, double price){
+        this.id = id;
         this.title = title;
         this.category = category;
         this.price = price;

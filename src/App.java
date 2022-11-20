@@ -8,12 +8,12 @@ public class App {
         // MenuController menuCon = new MenuController();
         // menuCon.mainMenu();
 
-        // Testy test = new Testy(5);
-
         gameDAO test = new gameDAO();
         
-        // System.out.println(test.findAll());
-        test.setPromo(test.findAll());
+
+        // test.updatePromos(test.setPromoPrice(test.findAll(),"FPS"));
+        // test.findAll();
+        test.getDayNumber();
         
     }
 }
