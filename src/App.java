@@ -1,3 +1,5 @@
+import java.sql.Date;
+
 import dao.*;
 
 
@@ -13,7 +15,9 @@ public class App {
 
         // test.updatePromos(test.setPromoPrice(test.findAll(),"FPS"));
         // test.findAll();
-        test.getDayNumber();
+        // test.updateWeekendPromo(test.setPromoPrice("FPS",0.9));
+        test.finishPromoSale();
+        test.checkIfFinished();
         
     }
 }

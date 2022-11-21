@@ -64,6 +64,7 @@ public class MenuController {
         System.out.println("3. Ukryj produkt");
         System.out.println("4. Usuń produkt");
         System.out.println("5. Wyświetl alfabetycznie");
+        System.out.println("6. Ustaw weekendową promocję");
         System.out.println("9. Zakończ program");
         int adminMenu_nr = scan.nextInt();
         scan.nextLine();
@@ -83,6 +84,9 @@ public class MenuController {
             case 5:
                 menuSortAplh();
                 break;
+            case 6:
+            
+            break;
             case 9:
                 closeProgram();
                 break;
