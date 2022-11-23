@@ -84,25 +84,19 @@ public class gameDAO {
             System.out.println(e);
         }
     }
-    public void checkIfFinished(){
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)){
-            String CHECK_IF_FINISHED = "SELECT * FROM games ORDER BY dscd_price DESC LIMIT 10;";
-            PreparedStatement preparedStmt = conn.prepareStatement(CHECK_IF_FINISHED);
-            ResultSet resultSet = preparedStmt.executeQuery();
-            while(resultSet.next()){
-                System.out.print(resultSet.getString(1));
-                System.out.print(resultSet.getString(2));
-                System.out.print(resultSet.getString(3));
-                System.out.print(resultSet.getString(4));
-                System.out.print(resultSet.getString(5));
-                System.out.println();
-            }
+    // public void checkIfFinished(){
+    //     try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)){
+    //         String CHECK_IF_FINISHED = "SELECT * FROM games ORDER BY dscd_price DESC LIMIT 10;";
+    //         PreparedStatement preparedStmt = conn.prepareStatement(CHECK_IF_FINISHED);
+    //         ResultSet resultSet = preparedStmt.executeQuery();
+    //         while(resultSet.next()){ 
+    //         }
             
 
-        }catch (Exception e){
-            System.out.println(e);
-        }
-    }
+    //     }catch (Exception e){
+    //         System.out.println(e);
+    //     }
+    // }
     
 
     

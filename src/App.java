@@ -9,15 +9,15 @@ public class App {
 
         // MenuController menuCon = new MenuController();
         // menuCon.mainMenu();
-
-        gameDAO test = new gameDAO();
-        
+        ProductDAO productDAO = new ProductDAO();
+        // gameDAO test = new gameDAO();
+        productDAO.listCategory();
 
         // test.updatePromos(test.setPromoPrice(test.findAll(),"FPS"));
         // test.findAll();
         // test.updateWeekendPromo(test.setPromoPrice("FPS",0.9));
-        test.finishPromoSale();
-        test.checkIfFinished();
+        // test.finishPromoSale();
+        // test.checkIfFinished();
         
     }
 }

@@ -2,12 +2,13 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Scanner;
 import java.sql.*;
 
 
 public class ProductDAO {
 
-
+    Scanner scan = new Scanner(System.in);
     public Double price;
     private static String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";
     private static String MYSQL_USER = "root";
@@ -187,5 +188,28 @@ public class ProductDAO {
                         System.out.println(e);
                     }
             }
-    
+                public void listCategory(){
+                    int nextPage = 0;
+                    for(;;){
+                    try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+                        
+                        String QUERY_LIST_CATEGORIES = "SELECT * FROM category LIMIT "+nextPage+","+nextPage+5+"";
+                        PreparedStatement preparedStmt = conn.prepareStatement(QUERY_LIST_CATEGORIES);
+                        ResultSet resultSet = preparedStmt.executeQuery();
+                        while(resultSet.next()){
+                            String id = resultSet.getString("id");
+                            String category = resultSet.getString("category");
+                            System.out.println("ID: "+id+" Kategoria: "+category);
+                        }
+                        System.out.println("Wpisz 9 aby szukać dalej");
+                        int nine = scan.nextInt();
+                        if(nine==9){
+                            nextPage=+5;
+                            listCategory();
+                        }
+
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
+                }}
 }

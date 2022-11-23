@@ -113,7 +113,7 @@ public class MenuController {
         System.out.println("Okej, dodajemy nową gre!");
         System.out.println("Tytuł gry: ");
         String title = scan.nextLine();
-        System.out.println("Kategoria produktu: ");
+        System.out.println("Kategoria produktu: "); // tu powinna rozwijać się lista kategorii do wyboru
         String category = scan.nextLine();
         System.out.println("Podaj cenę: ");
         double newPrice = scan.nextDouble();
@@ -316,6 +316,8 @@ public class MenuController {
         System.out.println("2. Cofnij"); // brak funkcjonalnosci
         scan.nextLine();
     }
+
+    
 
     public void closeProgram() {
         System.exit(0);
