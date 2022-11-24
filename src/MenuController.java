@@ -7,6 +7,7 @@ public class MenuController {
     UserDAO userDAO = new UserDAO();
     ProductDAO productDAO = new ProductDAO();
     Scanner scan = new Scanner(System.in);
+    CategoryDAO categoryDAO = new CategoryDAO();
 
     public void mainMenu() {
         System.out.println("1. Zaloguj się");
@@ -114,7 +115,7 @@ public class MenuController {
         System.out.println("Tytuł gry: ");
         String title = scan.nextLine();
         System.out.println("Kategoria produktu: "); // tu powinna rozwijać się lista kategorii do wyboru
-        String category = scan.nextLine();
+        String category = categoryDAO.listCategory();
         System.out.println("Podaj cenę: ");
         double newPrice = scan.nextDouble();
         scan.nextLine();
@@ -309,7 +310,7 @@ public class MenuController {
 
     public void guestSearchForCategory() {
         System.out.println("Podaj kategorię:");
-        String category = scan.nextLine();
+        String category = categoryDAO.listCategory();
         System.out.println("Wyszukałeś kategorię: " + category);
         productDAO.searchForCategory(category);
         System.out.println("1. Dodaj do koszyka"); // brak funkcjonalności

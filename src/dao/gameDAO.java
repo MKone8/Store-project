@@ -11,7 +11,7 @@ import java.util.List;
 import Utils.Utils;
 import model.Game;
 
-public class gameDAO {
+public class GameDAO {
     private static String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";
     private static String MYSQL_USER = "root";
     private static String MYSQL_PASSWORD = "xvpVPoWbop8Mf3y";
@@ -84,21 +84,4 @@ public class gameDAO {
             System.out.println(e);
         }
     }
-    // public void checkIfFinished(){
-    //     try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)){
-    //         String CHECK_IF_FINISHED = "SELECT * FROM games ORDER BY dscd_price DESC LIMIT 10;";
-    //         PreparedStatement preparedStmt = conn.prepareStatement(CHECK_IF_FINISHED);
-    //         ResultSet resultSet = preparedStmt.executeQuery();
-    //         while(resultSet.next()){ 
-    //         }
-            
-
-    //     }catch (Exception e){
-    //         System.out.println(e);
-    //     }
-    // }
-    
-
-    
-
 }

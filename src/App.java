@@ -9,15 +9,19 @@ public class App {
 
         // MenuController menuCon = new MenuController();
         // menuCon.mainMenu();
-        ProductDAO productDAO = new ProductDAO();
+        // ProductDAO productDAO = new ProductDAO();
+        CategoryDAO categoryDAO = new CategoryDAO();
         // gameDAO test = new gameDAO();
-        productDAO.listCategory();
-
+        
+        // categoryDAO.findAllCategories();
+        System.out.println(categoryDAO.findAllCategories());
+        // System.out.println(productDAO.listCategory());
         // test.updatePromos(test.setPromoPrice(test.findAll(),"FPS"));
         // test.findAll();
         // test.updateWeekendPromo(test.setPromoPrice("FPS",0.9));
         // test.finishPromoSale();
         // test.checkIfFinished();
+
         
     }
 }

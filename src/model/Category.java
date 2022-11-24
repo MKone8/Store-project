@@ -1,20 +1,20 @@
 package model;
 
-public class Game extends Product {
+public class Category extends Product {
 
-    public Game(int id, String title, String category) {
+    public Category(int id, String title, String category) {
         super(id, title, category);
-        //TODO Auto-generated constructor stub
-    }
-    public Game(int id, String title, String category, double price){
-        super(id, title,category,price);
-        //NOT GENERATED AUTOMATICALLY
-    }
-    public Game (int id, String title){
-        super(id,title);
-        //NOT GENERATED AUTOMATICALLY
     }
 
+    public Category(int id, String title, String category, double price) {
+        super(id, title, category, price);
+    }
+
+    public Category(int id, String category) {
+        super(id, category);
+        //TODO Auto-generated constructor stub
+        // zmieniłem tu z title na category (ciekawe co sie stanie)
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -81,5 +81,7 @@ public class Game extends Product {
         // TODO Auto-generated method stub
         return super.toString();
     }
+
+
     
 }
