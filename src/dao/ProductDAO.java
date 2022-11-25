@@ -20,15 +20,15 @@ public class ProductDAO {
     private String MYSQL_TABLE = "games"; // games, books, films // Tworze obiekt GamesDAO i w konstruktorze ustawiam
                                           // wartość (możliwe, ze trzeba będize użyć settera)
 
-    public void addProduct(String title, String category, Double price) {
+    public void addProduct(String title, int categoryId, Double price) {
 
         try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
 
-            String QUERY_ADD = "INSERT INTO " + MYSQL_TABLE + " (title, category, price) VALUES (?,?,?)";
+            String QUERY_ADD = "INSERT INTO " + MYSQL_TABLE + " (title, categoryId, price) VALUES (?,?,?)";
             PreparedStatement preparedStmt = conn.prepareStatement(QUERY_ADD);
 
             preparedStmt.setString(1, title);
-            preparedStmt.setString(2, category);
+            preparedStmt.setInt(2, categoryId);
             preparedStmt.setDouble(3, price);
 
             preparedStmt.execute();
@@ -66,7 +66,8 @@ public class ProductDAO {
     public String showInfo(String title) {
 
         try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
-            String QUERY_SHOWINFO_BY_TITLE = "Select * FROM " + MYSQL_TABLE + " WHERE title = ?";
+            String QUERY_SHOWINFO_BY_TITLE = "Select games.id, games.title, category.category, games.price FROM "
+                    + MYSQL_TABLE + " LEFT JOIN category ON games.categoryID = category.id WHERE games.title = ?";
 
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SHOWINFO_BY_TITLE);
             preparedStatement.setString(1, title);
@@ -92,7 +93,8 @@ public class ProductDAO {
     public String showInfo(int id) {
 
         try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
-            String QUERY_SHOWINFO_BY_ID = "Select * FROM " + MYSQL_TABLE + " WHERE id = ?";
+            String QUERY_SHOWINFO_BY_ID = "Select games.id, games.title, category.category, games.price FROM "
+                    + MYSQL_TABLE + " LEFT JOIN category ON games.categoryID = category.id WHERE games.id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SHOWINFO_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -100,7 +102,7 @@ public class ProductDAO {
             if (resultSet.next()) {
                 int prodId = resultSet.getInt("id");
                 String title = resultSet.getString("title");
-                String category = resultSet.getString("category");
+                String category = resultSet.getString("category.category");
                 this.price = resultSet.getDouble("price");
                 String infos = "[ID]= " + prodId + ",[title]= " + title + ",[category]= " + category + ",[price]= "
                         + price;
@@ -184,11 +186,11 @@ public class ProductDAO {
         }
     }
 
-    public void searchForCategory(String cat) {
+    public void searchForCategory(int cat) {
         try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
-            String QUERY_SEARCH_FOR_CATEGORY = " Select * From " + MYSQL_TABLE + " WHERE category LIKE ? LIMIT 10";
+            String QUERY_SEARCH_FOR_CATEGORY = " Select * From " + MYSQL_TABLE + " WHERE categoryId LIKE ? LIMIT 10";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SEARCH_FOR_CATEGORY);
-            preparedStatement.setString(1, cat);
+            preparedStatement.setInt(1, cat);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -201,7 +203,5 @@ public class ProductDAO {
             System.out.println(e);
         }
     }
-
-    
 
 }

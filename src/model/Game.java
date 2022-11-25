@@ -2,12 +2,12 @@ package model;
 
 public class Game extends Product {
 
-    public Game(int id, String title, String category) {
-        super(id, title, category);
+    public Game(int id, String title, int categoryId) {
+        super(id, title, categoryId);
         //TODO Auto-generated constructor stub
     }
-    public Game(int id, String title, String category, double price){
-        super(id, title,category,price);
+    public Game(int id, String title, int categoryId, double price){
+        super(id, title,categoryId,price);
         //NOT GENERATED AUTOMATICALLY
     }
     public Game (int id, String title){
@@ -23,7 +23,7 @@ public class Game extends Product {
     }
 
     @Override
-    public String getCategory() {
+    public int getCategory() {
         // TODO Auto-generated method stub
         return super.getCategory();
     }
@@ -53,9 +53,9 @@ public class Game extends Product {
     }
 
     @Override
-    public void setCategory(String category) {
+    public void setCategory(int categoryId) {
         // TODO Auto-generated method stub
-        super.setCategory(category);
+        super.setCategory(categoryId);
     }
 
     @Override

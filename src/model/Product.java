@@ -3,7 +3,7 @@ package model;
 public abstract class Product {
     private int id;
     private String title;
-    private String category;
+    private int categoryId;
     private Double price;
 
     public Product(int id, String title){
@@ -11,15 +11,17 @@ public abstract class Product {
         this.title = title;
     }  
 
-    public Product (int id, String title, String category){
+   
+
+    public Product (int id, String title, int categoryId){
         this.id = id;
         this.title = title;
-        this.category = category;
+        this.categoryId = categoryId;
     }
-    public Product (int id, String title, String category, double price){
+    public Product (int id, String title, int categoryId, double price){
         this.id = id;
         this.title = title;
-        this.category = category;
+        this.categoryId = categoryId;
         this.price = price;
     }    
 
@@ -35,11 +37,11 @@ public abstract class Product {
     public void setTitle(String title) {
         this.title = title;
     }
-    public String getCategory() {
-        return category;
+    public int getCategory() {
+        return categoryId;
     }
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategory(int category) {
+        this.categoryId = category;
     }
     public void setPrice(Double price) {
         this.price = price;
@@ -50,8 +52,9 @@ public abstract class Product {
 
     @Override
     public String toString() {
-        return "Product [id=" + id + ", title=" + title + ", category=" + category + ", price=" + price + "]";
+        return "Product [id=" + id + ", title=" + title + ", category=" + categoryId+ ", price=" + price + "]";
     }
+
 
     @Override
     public int hashCode() {
@@ -59,10 +62,11 @@ public abstract class Product {
         int result = 1;
         result = prime * result + id;
         result = prime * result + ((title == null) ? 0 : title.hashCode());
-        result = prime * result + ((category == null) ? 0 : category.hashCode());
+        result = prime * result + categoryId;
         result = prime * result + ((price == null) ? 0 : price.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -79,10 +83,7 @@ public abstract class Product {
                 return false;
         } else if (!title.equals(other.title))
             return false;
-        if (category == null) {
-            if (other.category != null)
-                return false;
-        } else if (!category.equals(other.category))
+        if (categoryId != other.categoryId)
             return false;
         if (price == null) {
             if (other.price != null)
@@ -91,6 +92,5 @@ public abstract class Product {
             return false;
         return true;
     }
-
     
 }

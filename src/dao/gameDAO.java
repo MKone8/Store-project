@@ -23,12 +23,12 @@ public class GameDAO {
 
         try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
             List<Game> listOfGames = new ArrayList<Game>();
-            String QUERY_ADD = "SELECT id, title, category, price FROM "+MYSQL_TABLE+"";
+            String QUERY_ADD = "SELECT games.id, games.title, category.id, games.price FROM "+MYSQL_TABLE+" LEFT JOIN category ON games.categoryID = category.id";
             PreparedStatement preparedStmt = conn.prepareStatement(QUERY_ADD);
             ResultSet resultSet = preparedStmt.executeQuery();
             while (resultSet.next()) {
                 Game games = new Game(resultSet.getInt("id"), resultSet.getString("title"),
-                        resultSet.getString("category"), resultSet.getDouble("price"));
+                        resultSet.getInt("category.id"), resultSet.getDouble("price"));
                 listOfGames.add(games);
             }
             return listOfGames;
@@ -39,11 +39,11 @@ public class GameDAO {
         return null;
     }
 
-    public List<Game> setPromoPrice(String category, Double discountPercentage) {
-        List<Game> promoList = findAll();
+    public List<Game> setPromoPrice(int categoryId, Double discountPercentage) {
+        List<Game> listOfGames = findAll();
         List<Game> discountedGames = new ArrayList<Game>();
-        for (Game toBePromoted : promoList) {
-            if (toBePromoted.getCategory().contains(category)) {
+        for (Game toBePromoted : listOfGames) {
+            if (toBePromoted.getCategory() == categoryId) {               
                 toBePromoted.setPrice(((toBePromoted.getPrice() * discountPercentage)));
                 discountedGames.add(toBePromoted);
             }
@@ -56,7 +56,7 @@ public class GameDAO {
         try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
             String QUERY_PUT_PROMO_PRICES = "UPDATE games SET dscd_price = ROUND(?,2) WHERE id = ?";
             PreparedStatement preparedStmt = conn.prepareStatement(QUERY_PUT_PROMO_PRICES);
-            if(!Utils.ifWeekend()){
+            if(Utils.ifWeekend()){
             for (Game discountedGame : discountedGames) {
                 preparedStmt.setDouble(1, discountedGame.getPrice());
                 preparedStmt.setInt(2, discountedGame.getId());

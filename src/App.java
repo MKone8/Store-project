@@ -7,14 +7,15 @@ public class App {
     public static void main(String[] args) throws Exception {
         System.out.println("Hello, World!");
 
-        // MenuController menuCon = new MenuController();
-        // menuCon.mainMenu();
+        MenuController menuCon = new MenuController();
+        menuCon.mainMenu();
         // ProductDAO productDAO = new ProductDAO();
-        CategoryDAO categoryDAO = new CategoryDAO();
-        // gameDAO test = new gameDAO();
-        
-        // categoryDAO.findAllCategories();
-        System.out.println(categoryDAO.findAllCategories());
+        // CategoryDAO categoryDAO = new CategoryDAO();
+        // GameDAO test = new GameDAO();
+        // System.out.println(test.setPromoPrice(4,0.9));
+        // test.updateWeekendPromo(test.setPromoPrice(4,0.9));
+        // categoryDAO.listCategory();
+        // System.out.println(categoryDAO.findAllCategories());
         // System.out.println(productDAO.listCategory());
         // test.updatePromos(test.setPromoPrice(test.findAll(),"FPS"));
         // test.findAll();

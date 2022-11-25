@@ -115,16 +115,16 @@ public class MenuController {
         System.out.println("Tytuł gry: ");
         String title = scan.nextLine();
         System.out.println("Kategoria produktu: "); // tu powinna rozwijać się lista kategorii do wyboru
-        String category = categoryDAO.listCategory();
+        int categoryId = categoryDAO.listCategory();
         System.out.println("Podaj cenę: ");
         double newPrice = scan.nextDouble();
         scan.nextLine();
-        System.out.println("Potwierdź, że chcesz dodać produkt: " + title + " z kategorią: " + category + " oraz ceną: "
+        System.out.println("Potwierdź, że chcesz dodać produkt: " + title + " z kategorią: " + categoryId + " oraz ceną: "
                 + newPrice);
         System.out.print("Y/n: ");
         String choice = scan.nextLine().toUpperCase();
         if (choice.equals("Y")) {
-            productDAO.addProduct(title, category, newPrice);
+            productDAO.addProduct(title, categoryId, newPrice);
             System.out.println(productDAO.showInfo(title));
             System.out.println("Czy chcesz dodać kolejny produkt?");
             System.out.print("Y/n: ");
@@ -310,9 +310,9 @@ public class MenuController {
 
     public void guestSearchForCategory() {
         System.out.println("Podaj kategorię:");
-        String category = categoryDAO.listCategory();
-        System.out.println("Wyszukałeś kategorię: " + category);
-        productDAO.searchForCategory(category);
+        int categoryId = categoryDAO.listCategory();
+        System.out.println("Wyszukałeś kategorię: " + categoryId);
+        productDAO.searchForCategory(categoryId);
         System.out.println("1. Dodaj do koszyka"); // brak funkcjonalności
         System.out.println("2. Cofnij"); // brak funkcjonalnosci
         scan.nextLine();

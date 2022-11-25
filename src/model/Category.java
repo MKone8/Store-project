@@ -2,12 +2,12 @@ package model;
 
 public class Category extends Product {
 
-    public Category(int id, String title, String category) {
-        super(id, title, category);
+    public Category(int id, String title, int categoryId) {
+        super(id, title, categoryId);
     }
 
-    public Category(int id, String title, String category, double price) {
-        super(id, title, category, price);
+    public Category(int id, String title, int categoryId, double price) {
+        super(id, title, categoryId, price);
     }
 
     public Category(int id, String category) {
@@ -23,7 +23,7 @@ public class Category extends Product {
     }
 
     @Override
-    public String getCategory() {
+    public int getCategory() {
         // TODO Auto-generated method stub
         return super.getCategory();
     }
@@ -53,9 +53,9 @@ public class Category extends Product {
     }
 
     @Override
-    public void setCategory(String category) {
+    public void setCategory(int categoryId) {
         // TODO Auto-generated method stub
-        super.setCategory(category);
+        super.setCategory(categoryId);
     }
 
     @Override
