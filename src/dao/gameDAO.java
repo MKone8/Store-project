@@ -12,18 +12,12 @@ import Utils.Utils;
 import model.Game;
 
 public class GameDAO {
-    private static String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";
-    private static String MYSQL_USER = "root";
-    private static String MYSQL_PASSWORD = "xvpVPoWbop8Mf3y";
-    private String MYSQL_TABLE = "games"; // games, books, films // Tworze obiekt GamesDAO i w konstruktorze ustawiam
-                                          // wartość (możliwe, ze trzeba będize użyć settera)
-
-    // Game games = new Game(title, category, price);
+    
     public List<Game> findAll() {
 
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
+        try (Connection conn = Utils.mySqlConnection()) {
             List<Game> listOfGames = new ArrayList<Game>();
-            String QUERY_ADD = "SELECT games.id, games.title, category.id, games.price FROM "+MYSQL_TABLE+" LEFT JOIN category ON games.categoryID = category.id";
+            String QUERY_ADD = "SELECT games.id, games.title, category.id, games.price FROM games LEFT JOIN category ON games.categoryID = category.id";
             PreparedStatement preparedStmt = conn.prepareStatement(QUERY_ADD);
             ResultSet resultSet = preparedStmt.executeQuery();
             while (resultSet.next()) {
@@ -53,7 +47,7 @@ public class GameDAO {
 
     public void updateWeekendPromo(List<Game> discountedGames) {
 
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
+        try (Connection conn = Utils.mySqlConnection()) {
             String QUERY_PUT_PROMO_PRICES = "UPDATE games SET dscd_price = ROUND(?,2) WHERE id = ?";
             PreparedStatement preparedStmt = conn.prepareStatement(QUERY_PUT_PROMO_PRICES);
             if(Utils.ifWeekend()){
@@ -73,7 +67,7 @@ public class GameDAO {
     public void finishPromoSale(){
         List<Game>regularPrice = findAll();
         
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)){
+        try (Connection conn = Utils.mySqlConnection()){
             String QUERY_FINISH_PROMO_PRICES = "UPDATE games SET dscd_price = ?";
             PreparedStatement preparedStmt = conn.prepareStatement(QUERY_FINISH_PROMO_PRICES);
             for(Game of : regularPrice){

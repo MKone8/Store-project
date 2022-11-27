@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import Utils.Utils;
 import model.Product;
 
 import java.sql.*;
@@ -14,17 +15,12 @@ public class ProductDAO {
 
     Scanner scan = new Scanner(System.in);
     public Double price;
-    private static String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";
-    private static String MYSQL_USER = "root";
-    private static String MYSQL_PASSWORD = "xvpVPoWbop8Mf3y";
-    private String MYSQL_TABLE = "games"; // games, books, films // Tworze obiekt GamesDAO i w konstruktorze ustawiam
-                                          // wartość (możliwe, ze trzeba będize użyć settera)
 
     public void addProduct(String title, int categoryId, Double price) {
 
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
+        try (Connection conn = Utils.mySqlConnection()) {
 
-            String QUERY_ADD = "INSERT INTO " + MYSQL_TABLE + " (title, categoryId, price) VALUES (?,?,?)";
+            String QUERY_ADD = "INSERT INTO games (title, categoryId, price) VALUES (?,?,?)";
             PreparedStatement preparedStmt = conn.prepareStatement(QUERY_ADD);
 
             preparedStmt.setString(1, title);
@@ -40,8 +36,8 @@ public class ProductDAO {
 
     public void removeProduct(String title) {
 
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
-            String QUERY_REMOVE_BY_TITLE = "DELETE FROM " + MYSQL_TABLE + " WHERE title = ?";
+        try (Connection conn = Utils.mySqlConnection()) {
+            String QUERY_REMOVE_BY_TITLE = "DELETE FROM games WHERE title = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY_REMOVE_BY_TITLE);
             preparedStatement.setString(1, title);
             preparedStatement.execute();
@@ -53,8 +49,8 @@ public class ProductDAO {
 
     public void removeProduct(int id) {
 
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
-            String QUERY_REMOVE_BY_ID = "DELETE FROM " + MYSQL_TABLE + " WHERE id = ?";
+        try (Connection conn = Utils.mySqlConnection()) {
+            String QUERY_REMOVE_BY_ID = "DELETE FROM games WHERE id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY_REMOVE_BY_ID);
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
@@ -65,9 +61,8 @@ public class ProductDAO {
 
     public String showInfo(String title) {
 
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
-            String QUERY_SHOWINFO_BY_TITLE = "Select games.id, games.title, category.category, games.price FROM "
-                    + MYSQL_TABLE + " LEFT JOIN category ON games.categoryID = category.id WHERE games.title = ?";
+        try (Connection conn = Utils.mySqlConnection()) {
+            String QUERY_SHOWINFO_BY_TITLE = "Select games.id, games.title, category.category, games.price FROM games LEFT JOIN category ON games.categoryID = category.id WHERE games.title = ?";
 
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SHOWINFO_BY_TITLE);
             preparedStatement.setString(1, title);
@@ -92,9 +87,10 @@ public class ProductDAO {
 
     public String showInfo(int id) {
 
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
-            String QUERY_SHOWINFO_BY_ID = "Select games.id, games.title, category.category, games.price FROM "
-                    + MYSQL_TABLE + " LEFT JOIN category ON games.categoryID = category.id WHERE games.id = ?";
+        try (Connection conn = Utils.mySqlConnection()) {
+            String QUERY_SHOWINFO_BY_ID = "Select games.id, games.title, category.category, games.price FROM games" +
+                 " LEFT JOIN category ON games.categoryID = category.id WHERE games.id = ?";
+                    
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SHOWINFO_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -117,10 +113,10 @@ public class ProductDAO {
     }
 
     public void sortAlph() {
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
+        try (Connection conn = Utils.mySqlConnection()) {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement
-                    .executeQuery("SELECT title, price FROM " + MYSQL_TABLE + " ORDER BY title ASC LIMIT 10");
+                    .executeQuery("SELECT title, price FROM games ORDER BY title ASC LIMIT 10");
 
             while (resultSet.next()) {
                 String title = resultSet.getString("title");
@@ -137,8 +133,8 @@ public class ProductDAO {
     }
 
     public void updatePrice(int id, double price) {
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
-            String QUERY_UPDATE_PRICE_BY_ID = "UPDATE " + MYSQL_TABLE + " SET price = ? WHERE id = ?";
+        try (Connection conn = Utils.mySqlConnection()) {
+            String QUERY_UPDATE_PRICE_BY_ID = "UPDATE games SET price = ? WHERE id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY_UPDATE_PRICE_BY_ID);
             preparedStatement.setDouble(1, price);
             preparedStatement.setInt(2, id);
@@ -152,8 +148,8 @@ public class ProductDAO {
     }
 
     public void updatePrice(String title, double price) {
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
-            String QUERY_UPDATE_PRICE_BY_TITLE = "Update " + MYSQL_TABLE + " SET price = ? WHERE title = ?";
+        try (Connection conn = Utils.mySqlConnection()) {
+            String QUERY_UPDATE_PRICE_BY_TITLE = "Update games SET price = ? WHERE title = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY_UPDATE_PRICE_BY_TITLE);
             preparedStatement.setDouble(1, price);
             preparedStatement.setString(2, title);
@@ -167,8 +163,8 @@ public class ProductDAO {
     }
 
     public void searchForGame(String tit) {
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
-            String QUERY_SEARCH_FOR_GAME = "Select * FROM " + MYSQL_TABLE + " WHERE title LIKE ? LIMIT 10";
+        try (Connection conn = Utils.mySqlConnection()) {
+            String QUERY_SEARCH_FOR_GAME = "Select * FROM games WHERE title LIKE ? LIMIT 10";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SEARCH_FOR_GAME);
             preparedStatement.setString(1, "%" + tit + "%");
 
@@ -187,8 +183,8 @@ public class ProductDAO {
     }
 
     public void searchForCategory(int cat) {
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
-            String QUERY_SEARCH_FOR_CATEGORY = " Select * From " + MYSQL_TABLE + " WHERE categoryId LIKE ? LIMIT 10";
+        try (Connection conn = Utils.mySqlConnection()) {
+            String QUERY_SEARCH_FOR_CATEGORY = " Select * FROM category WHERE categoryId LIKE ? LIMIT 10";
             PreparedStatement preparedStatement = conn.prepareStatement(QUERY_SEARCH_FOR_CATEGORY);
             preparedStatement.setInt(1, cat);
             ResultSet resultSet = preparedStatement.executeQuery();

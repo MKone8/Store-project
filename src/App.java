@@ -11,7 +11,7 @@ public class App {
         menuCon.mainMenu();
         // ProductDAO productDAO = new ProductDAO();
         // CategoryDAO categoryDAO = new CategoryDAO();
-        // GameDAO test = new GameDAO();
+        // GameDAO test = new Gam1eDAO();
         // System.out.println(test.setPromoPrice(4,0.9));
         // test.updateWeekendPromo(test.setPromoPrice(4,0.9));
         // categoryDAO.listCategory();

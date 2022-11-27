@@ -8,21 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import Utils.Utils;
 import model.Category;
 
 public class CategoryDAO {
 
     Scanner scan = new Scanner(System.in);
     public Double price;
-    private static String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";
-    private static String MYSQL_USER = "root";
-    private static String MYSQL_PASSWORD = "xvpVPoWbop8Mf3y";
-    private String MYSQL_TABLE = "category"; // games, books, films // Tworze obiekt GamesDAO i w konstruktorze ustawiam
-                                             // wartość (możliwe, ze trzeba będize użyć settera)
 
     public int listCategory() {
 
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
+        try (Connection conn = Utils.mySqlConnection()) {
             int nextPage = 0;
 
             for (;;) {
@@ -77,16 +73,14 @@ public class CategoryDAO {
     public List<Category> findAllCategories() {
 
         String QUERY_FIND_ALL_CATEGORIES = "Select * FROM category";
-        try (Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD)) {
+
+        try (Connection conn = Utils.mySqlConnection()) {
             List<Category> categories = new ArrayList<Category>();
             PreparedStatement preparedStmt = conn.prepareStatement(QUERY_FIND_ALL_CATEGORIES);
 
             ResultSet resultSet = preparedStmt.executeQuery();
             while (resultSet.next()) {
-                // int id = resultSet.getInt("id");
-                // String category = resultSet.getString("category");
-                // System.out.println(id+" "+category);
-                Category product = new Category(resultSet.getInt("id"), null, resultSet.getInt("category"));
+                Category product = new Category(resultSet.getInt("id"), resultSet.getInt("category"));
                 categories.add(product);
             }
             return categories;
