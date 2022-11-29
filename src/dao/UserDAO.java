@@ -1,17 +1,12 @@
 package dao;
-
 import java.sql.*;
 import java.util.Scanner;
-
 import org.mindrot.jbcrypt.BCrypt;
+import Utils.Utils;
 
-import model.User;
 
 public class UserDAO {
     
-    private static String MYSQL_URL = "jdbc:mysql://localhost:3306/gamesStore?useSSL=false&characterEncoding=utf8";
-    private static String MYSQL_USER = "root";
-    private static String MYSQL_PASSWORD = "xvpVPoWbop8Mf3y";
     private static final String CREATE_USER_QUERY = "INSERT INTO User (email, password)"+" VALUES (?,?)";
     private static final String LOGIN_USER_QUERY = "SELECT password FROM user WHERE email = ?";
     // private static final String USER_EXISTENCE_CHECK = "SELECT email FROM USER WHERE email = ?";
@@ -19,7 +14,7 @@ public class UserDAO {
     
     public void create(String email, String password){
                         
-        try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+        try(Connection conn = Utils.mySqlConnection()){
    
             String pw_hash = BCrypt.hashpw(password, BCrypt.gensalt(12));
             PreparedStatement preparedStmt = conn.prepareStatement(CREATE_USER_QUERY);
@@ -36,7 +31,7 @@ public class UserDAO {
     }
         
     public boolean isCreated(String email){
-        try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){
+        try(Connection conn = Utils.mySqlConnection()){
             PreparedStatement preparedStmt = conn.prepareStatement(LOGIN_USER_QUERY);
             preparedStmt.setString(1,email);
             ResultSet resultSet = preparedStmt.executeQuery();
@@ -58,7 +53,7 @@ public class UserDAO {
 
     public boolean loginVer(String email, String password){
      
-        try(Connection conn = DriverManager.getConnection(MYSQL_URL,MYSQL_USER,MYSQL_PASSWORD)){         
+        try(Connection conn = Utils.mySqlConnection()){         
             PreparedStatement preparedStatement = conn.prepareStatement(LOGIN_USER_QUERY);
             preparedStatement.setString(1,email);
             ResultSet hashedPassword = preparedStatement.executeQuery();

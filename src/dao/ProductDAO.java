@@ -1,14 +1,7 @@
 package dao;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-
 import Utils.Utils;
-import model.Product;
-
 import java.sql.*;
 
 public class ProductDAO {

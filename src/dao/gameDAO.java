@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Types;
@@ -43,6 +42,7 @@ public class GameDAO {
             }
         }
         return discountedGames;
+        
     }
 
     public void updateWeekendPromo(List<Game> discountedGames) {

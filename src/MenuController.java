@@ -6,6 +6,7 @@ public class MenuController {
     
     UserDAO userDAO = new UserDAO();
     ProductDAO productDAO = new ProductDAO();
+    GameDAO gameDAO = new GameDAO();
     Scanner scan = new Scanner(System.in);
     CategoryDAO categoryDAO = new CategoryDAO();
 
@@ -66,6 +67,7 @@ public class MenuController {
         System.out.println("4. Usuń produkt");
         System.out.println("5. Wyświetl alfabetycznie");
         System.out.println("6. Ustaw weekendową promocję");
+        System.out.println("7. Zakończ wszystkie kampanie promocyjne");
         System.out.println("9. Zakończ program");
         int adminMenu_nr = scan.nextInt();
         scan.nextLine();
@@ -86,8 +88,10 @@ public class MenuController {
                 menuSortAplh();
                 break;
             case 6:
-            
+                setWeekendPromo();
             break;
+            case 7:
+                finishPromoSales();
             case 9:
                 closeProgram();
                 break;
@@ -110,11 +114,24 @@ public class MenuController {
         }
     }
 
+    public void setWeekendPromo(){
+        System.out.println("Kategoria produktu: ");
+        int categoryId = categoryDAO.listCategory();
+        System.out.println("Podaj wartość zniżki: ");
+        double discount = scan.nextDouble();
+        gameDAO.updateWeekendPromo(gameDAO.setPromoPrice(categoryId,discount));
+        showMenuAdmin();
+    }
+
+    public void finishPromoSales(){
+        gameDAO.finishPromoSale();
+    }
+
     public void menuAddProduct() {
         System.out.println("Okej, dodajemy nową gre!");
         System.out.println("Tytuł gry: ");
         String title = scan.nextLine();
-        System.out.println("Kategoria produktu: "); // tu powinna rozwijać się lista kategorii do wyboru
+        System.out.println("Kategoria produktu: ");
         int categoryId = categoryDAO.listCategory();
         System.out.println("Podaj cenę: ");
         double newPrice = scan.nextDouble();

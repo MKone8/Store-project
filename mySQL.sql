@@ -13,6 +13,22 @@ INSERT INTO User (email, password, admin)
 VALUES ('jankowalski@gmail.com','Polska123','1'),
 	   ('mariuszp@gmail.com','Hejka','0');
 
+CREATE TABLE category (
+	id INT AUTO_INCREMENT,
+    category VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+INSERT INTO category (category)
+VALUES ('Horror'),
+       ('Adventure'),
+       ('Action'),
+       ('Casual'),
+       ('Indie'),
+       ('RPG'),
+       ('Sports'),
+       ('Strategy'),
+       ('Tower Defense'),
 
 
 CREATE TABLE Games (
@@ -21,7 +37,8 @@ CREATE TABLE Games (
     categoryID INT NOT NULL,
     price DOUBLE NOT NULL,
     dscd_price DOUBLE,
-    PRIMARY KEY (id)    
+    PRIMARY KEY (id),
+    FOREIGN KEY (categoryID) REFERENCES category(id)    
 );
 
 INSERT INTO games (title, category,price) 
