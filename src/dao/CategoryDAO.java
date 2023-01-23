@@ -27,22 +27,20 @@ public class CategoryDAO {
                 PreparedStatement preparedStmt2 = conn.prepareStatement(QUERY_COUNT_CATEGORIES);
                 int size = 0;
                 ResultSet rs = preparedStmt2.executeQuery();
-                while(rs.next()){
-                    size = rs.getInt(1);                   
+                while (rs.next()) {
+                    size = rs.getInt(1);
                 }
-                
-                
-                
+
                 preparedStmt.setInt(1, nextPage);
                 preparedStmt.setInt(2, nextPage + 5);
 
                 ResultSet resultSet = preparedStmt.executeQuery();
-                
+
                 while (resultSet.next()) {
                     int id = resultSet.getInt("id");
                     String category = resultSet.getString("category");
                     System.out.println("ID: " + id + " Kategoria: " + category);
-                    
+
                 }
                 System.out.println(
                         "[-----Wpisz 'dalej' aby szukać dalej wpisz 'cofnij' cofnąć, wpisz ID kategorii aby wybrać-----]");
@@ -58,7 +56,8 @@ public class CategoryDAO {
                     int optionInt = Integer.parseInt(option);
                     if (optionInt < size) { // to jest do poprawy, tymczasowe rozwiazanie
                         return optionInt;
-                    } else System.out.println("Brak kategorii, spróbuj ponownie!");
+                    } else
+                        System.out.println("Brak kategorii, spróbuj ponownie!");
                 }
             }
         }

@@ -4,6 +4,10 @@
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
         "C:\\Program Files (x86)\\MySQL\\Connector J 8.0\\mysql-connector-java-8.0.30.jar",
-        "c:\\Users\\mkawa\\Desktop\\Libraries_java\\jbcrypt-0.4.jar"
+        "c:\\Users\\mkawa\\Desktop\\Libraries_java\\jbcrypt-0.4.jar",
+        "C:\\Users\\mkawa\\Desktop\\Libraries_java\\jackson-databind-2.11.1.jar",
+        "C:\\Users\\mkawa\\Desktop\\Libraries_java\\jackson-core-2.11.1.jar",
+        "C:\\Users\\mkawa\\Desktop\\Libraries_java\\gson-2.8.5.jar",
+        "c:\\Users\\mkawa\\Desktop\\Libraries_java\\jackson-annotations-2.14.1.jar"
     ]
 }

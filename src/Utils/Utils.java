@@ -1,9 +1,14 @@
 package Utils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.Calendar;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Utils {
 
@@ -31,4 +36,23 @@ public class Utils {
        Connection conn = DriverManager.getConnection(MYSQL_URL, MYSQL_USER, MYSQL_PASSWORD);
        return conn;
     }
+
+    public static double randomPrice(){
+        SecureRandom rand = new SecureRandom();
+        int upperbound = 15; 
+        double double_random = rand.nextInt(upperbound)+rand.nextFloat(); 
+        BigDecimal big = BigDecimal.valueOf(double_random).setScale(2,RoundingMode.HALF_UP);
+        double dob = big.doubleValue();  
+        return dob;
+        
+    }
+    public static int randomCategory(){
+        SecureRandom rand = new SecureRandom();
+        int upperbound = 9;
+        int randomCat = rand.nextInt(upperbound);
+        return randomCat;
+
+    }
+
+    
 }

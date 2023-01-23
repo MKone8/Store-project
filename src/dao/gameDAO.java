@@ -23,6 +23,7 @@ public class GameDAO {
                 Game games = new Game(resultSet.getInt("id"), resultSet.getString("title"),
                         resultSet.getInt("category.id"), resultSet.getDouble("price"));
                 listOfGames.add(games);
+                
             }
             return listOfGames;
 
